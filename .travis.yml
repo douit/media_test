@@ -37,6 +37,7 @@ script:
       fi
 
 after_success:
+  - echo after success staging ....
   - echo image=${image}
   - if [ ${image} = ad-insertion/video-analytics-service ]; then 
       echo hello 3;
