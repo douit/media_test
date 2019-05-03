@@ -16,11 +16,11 @@ before_install:
   - docker version
 
 script:
-  - if: imageName = dldt+ffmpeg
-    echo building go to 1
-    else:
-    echo building go to 2 
-
+  - if [ $imageName = dldt+ffmpeg ]; then
+      echo building go to 1;
+      else
+        echo building go to 2; 
+      fi
 #matrix:
 #  include:
     # centos-7.4 job
