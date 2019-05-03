@@ -7,23 +7,26 @@ addons:
       - docker-ce
     update: true
 env:
-  - CPU=Xeon buildOS=centos-7.4 imageName=dldt+ffmpeg
-  - CPU=Xeon buildOS=centos-7.6 imageName=dldt+gst
-  - CPU=Xeon buildOS=ubuntu-16.04 imageName=ospray
-  - CPU=Xeon buildOS=ubuntu-18.04 imageName=ospray+mpi+OpenImageIO
+  - imageName=dldt+ffmpeg
+  - imageName=dldt+gst
+  - imageName=ospray
+  - imageName=ospray+mpi+OpenImageIO
 
 before_install:
   - docker version
+
 script:
-  - echo Building ${CPU}/${buildOS}/${imageName}
+  - if: imageName = dldt+ffmpeg
+    echo building go to 1
+    else:
+    echo building go to 2 
 
 #matrix:
-job:
-  include:
+#  include:
     # centos-7.4 job
-    - name: centos-7.4/ffmpeg+gst+dev
-      env: CPU=Xeon buildOS=centos-7.4 imageName=ffmpeg+gst+dev
-      script:
-        - echo Building ${CPU}/${buildOS}/${imageName}
-      after_failure:
-        - tail --lines=5000 log_Xeon_centos74_ffmpeg_gst_dev.log
+#    - name: centos-7.4/ffmpeg+gst+dev
+#      env: CPU=Xeon buildOS=centos-7.4 imageName=ffmpeg+gst+dev
+#      script:
+#        - echo Building ${CPU}/${buildOS}/${imageName}
+#      after_failure:
+#        - tail --lines=5000 log_Xeon_centos74_ffmpeg_gst_dev.log
