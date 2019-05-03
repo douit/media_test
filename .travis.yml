@@ -17,10 +17,8 @@ before_install:
 script:
   - echo Building ${CPU}/${buildOS}/${imageName}
 
-matrix:
-  fast_finish: true
-  allow_failures: # All images with GST will have GST SVT VP9 test failing. NGINX RTMP tests are not stable
-    - name: centos-7.4/ffmpeg+gst+dev
+#matrix:
+job:
   include:
     # centos-7.4 job
     - name: centos-7.4/ffmpeg+gst+dev
@@ -29,10 +27,3 @@ matrix:
         - echo Building ${CPU}/${buildOS}/${imageName}
       after_failure:
         - tail --lines=5000 log_Xeon_centos74_ffmpeg_gst_dev.log
-    # ubuntu-16.04 job
-    - name: ubuntu-16.04/ffmpeg+gst+dev
-      env: CPU=Xeon buildOS=ubuntu-16.04 imageName=ffmpeg+gst+dev
-      script:
-        - echo Building ${CPU}/${buildOS}/${imageName}
-      after_failure:
-        - tail --lines=5000 log_Xeon_ubuntu1604_ffmpeg_gst_dev.log
