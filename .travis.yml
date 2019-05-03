@@ -1,32 +1,43 @@
 language: bash
 dist: xenial
 services: docker
+
 addons:
   apt:
     packages:
       - docker-ce
     update: true
+
 env:
-  - imageName=dldt+ffmpeg
-  - imageName=dldt+gst
-  - imageName=ospray
-  - imageName=ospray+mpi+OpenImageIO
+  - image=ad-insertion/video-analytics-service
+  - image=ad-decision
+  - image=image/ffmpeg
+  - image=account
+  - image=ad-content/frontend
+  - image=ad-content/archive
+  - image=ad-insertion/frontend
+  - image=ad-insertion/ad-static
+  - image=ad-insertion/analytic-db
+  - image=ad-insertion/ad-transcode
+  - image=deployment
+  - image=cdn
+  - image=content-provider/transcode
+  - image=content-provider/frontend
+  - image=content-provider/archive
 
 before_install:
   - docker version
 
 script:
-  - if [ $imageName = dldt+ffmpeg ]; then
-      echo building go to 1;
+  - echo hello 1
+  - if [ $image = ad-insertion/video-analytics-service ]; then
+      echo hello 2.1
       else
-        echo building go to 2; 
+        echo hello 2.2
       fi
-#matrix:
-#  include:
-    # centos-7.4 job
-#    - name: centos-7.4/ffmpeg+gst+dev
-#      env: CPU=Xeon buildOS=centos-7.4 imageName=ffmpeg+gst+dev
-#      script:
-#        - echo Building ${CPU}/${buildOS}/${imageName}
-#      after_failure:
-#        - tail --lines=5000 log_Xeon_centos74_ffmpeg_gst_dev.log
+
+after_success:
+  - if [ $image = ad-insertion/video-analytics-service]; then 
+      echo hello 3
+    fi
+  
