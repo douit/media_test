@@ -37,7 +37,8 @@ script:
       fi
 
 after_success:
-  - if [ $image = ad-insertion/video-analytics-service ]; then 
+  - echo image = ${image}
+  - if [ ${image} = ad-insertion/video-analytics-service ]; then 
       echo hello 3;
     fi
   
